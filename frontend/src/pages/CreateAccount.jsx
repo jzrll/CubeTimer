@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import axios from 'axios';
 import '../styles/CreateAccount.css';
 
 const CreateAccount = () => {
@@ -33,30 +34,17 @@ const CreateAccount = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('users/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-          password,
-          confirm_password: confirmPassword,
-        }),
+      const response = await axios.post('/users', {
+        username,
+        password,
+        confirm_password: confirmPassword,
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        setError(data.error || 'Failed to create account');
-        return;
-      }
-
       // Store user data in localStorage
-      localStorage.setItem('user', JSON.stringify(data));
+      localStorage.setItem('user', JSON.stringify(response.data));
       navigate('/timer');
     } catch (err) {
-      setError('An error occurred. Please try again.');
+      setError(err.response?.data?.error || 'Failed to create account');
       console.error(err);
     } finally {
       setLoading(false);
