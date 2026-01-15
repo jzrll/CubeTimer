@@ -39,8 +39,8 @@ def create_user():
     return jsonify({"id": user_id, "username": username}), 201
 
 
-@users_bp.route("/", methods=["GET"])
-def login_user():
+@users_bp.route("/login", methods=["POST"])
+def login_user_post():
     data = request.json
     username = data.get("username")
     password = data.get("password")
@@ -59,6 +59,7 @@ def login_user():
         row = cur.fetchone()
         if row:
             user_id = row[0]
+            username = row[1]
         else:
             user_id = None
             username = None
@@ -69,4 +70,7 @@ def login_user():
         cur.close()
         conn.close()
 
-    return jsonify({"id": user_id, "username": username}), 201
+    if user_id:
+        return jsonify({"id": user_id, "username": username}), 200
+    else:
+        return jsonify({"error": "Invalid username or password"}), 401
