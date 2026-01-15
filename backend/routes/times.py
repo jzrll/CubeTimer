@@ -18,16 +18,20 @@ def get_all_times():
     cur.close()
     conn.close()
 
-    # convert rows to list of dicts
-    result = [
-        {"id": r[0], "user_id": r[1], "time": float(r[2]), "created_at": r[3].isoformat()}
-        for r in rows
-    ]
+    result = []
+    for r in rows:
+        result.append({
+            "id": r[0],
+            "user_id": r[1],
+            "time": float(r[2]),
+            "created_at": r[3].isoformat()
+        })
+    
     return jsonify(result), 200
 
 
 # Get all times for a single user
-@times_bp.route("/user/<int:user_id>", methods=["GET"])
+@times_bp.route("/<int:user_id>", methods=["GET"])
 def get_times_for_user(user_id):
     conn = get_db_connection()
     cur = conn.cursor()
@@ -41,10 +45,13 @@ def get_times_for_user(user_id):
     cur.close()
     conn.close()
 
-    result = [
-        {"id": r[0], "time": float(r[1]), "created_at": r[2].isoformat()}
-        for r in rows
-    ]
+    result = []
+    for r in rows:
+        result.append({
+            "id": r[0],
+            "time": float(r[1]),
+            "created_at": r[2].isoformat()
+        })
     return jsonify(result), 200
 
 
@@ -55,25 +62,18 @@ def add_time():
     user_id = data.get("user_id")
     time_value = data.get("time")
 
-    if not user_id or time_value is None:
-        return jsonify({"error": "user_id and time are required"}), 400
-
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute(
-        "INSERT INTO times (user_id, time) VALUES (%s, %s) RETURNING id;",
+        "INSERT INTO times (user_id, time) VALUES (%s, %s);",
         (user_id, time_value)
     )
-    new_id = cur.fetchone()
-    if new_id:
-        new_id = new_id[0]
-    else:
-        new_id = None
+
     conn.commit()
     cur.close()
     conn.close()
 
-    return jsonify({"message": "Time added", "id": new_id}), 201
+    return jsonify({"message": "Time added"}), 201
 
 
 # Delete a time
