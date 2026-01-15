@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
+import axios from 'axios';
 import '../styles/Timer.css';
 
 const Timer = () => {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  const [userTimes, setUserTimes] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,6 +14,16 @@ const Timer = () => {
     const user = localStorage.getItem('user');
     if (!user) {
       navigate('/');
+    } else {
+      // Fetch user's times
+      const userData = JSON.parse(user);
+      axios.get(`/times/${userData.id}`)
+        .then((response) => {
+          setUserTimes(response.data.reverse());
+        })
+        .catch((error) => {
+          console.error('Error fetching times:', error);
+        });
     }
   }, [navigate]);
 
@@ -85,9 +97,39 @@ const Timer = () => {
         </div>
       )}
 
-      {/* Main Timer Section */}
-      <div className="timer-main">
-        <div className="timer-display">{time.toFixed(2)}</div>
+      {/* Main Content */}
+      <div className="timer-content">
+        {/* Timer Section */}
+        <div className="timer-main">
+          <div className="timer-display">{time.toFixed(2)}</div>
+        </div>
+
+        {/* Times List Section */}
+        <div className="times-list-container">
+          <h2 className="times-list-title">Your Times</h2>
+          <div className="times-list">
+            {userTimes.length > 0 ? (
+              <table className="times-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {userTimes.map((record, index) => (
+                    <tr key={record.id}>
+                      <td>{userTimes.length - index}</td>
+                      <td>{record.time.toFixed(2)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p className="no-times-message">No times recorded yet</p>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -77,14 +77,25 @@
 }
 
 /* Main Timer Section */
-.timer-main {
+.timer-content {
   flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  padding: 40px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.timer-main {
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 30px;
-  padding: 40px 20px;
 }
 
 .timer-display {
@@ -96,6 +107,75 @@
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   line-height: 1;
   min-height: 120px;
+  transition: color 0.1s ease;
+}
+
+.timer-display.timer-not-ready {
+  color: #ff4444;
+  text-shadow: 0 4px 20px rgba(255, 68, 68, 0.5);
+}
+
+.timer-display.timer-ready {
+  color: #44ff44;
+  text-shadow: 0 4px 20px rgba(68, 255, 68, 0.5);
+}
+
+/* Times List */
+.times-list-container {
+  flex: 0 0 350px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 25px;
+  max-height: 600px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.times-list-title {
+  color: white;
+  margin: 0 0 20px 0;
+  font-size: 1.3em;
+  font-weight: 600;
+  text-align: center;
+}
+
+.times-list {
+  color: white;
+}
+
+.times-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.times-table thead {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.times-table th {
+  padding: 10px 8px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.9em;
+}
+
+.times-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.95em;
+}
+
+.times-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.no-times-message {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+  margin: 20px 0;
 }
 
 .timer-status {
@@ -154,8 +234,19 @@
     justify-content: center;
   }
 
+  .timer-content {
+    flex-direction: column;
+    gap: 30px;
+  }
+
   .timer-display {
     font-size: 5em;
+  }
+
+  .times-list-container {
+    flex: 0 0 auto;
+    max-height: 300px;
+    width: 100%;
   }
 
   .timer-status {
