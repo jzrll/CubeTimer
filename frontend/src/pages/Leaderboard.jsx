@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router';
 import axios from 'axios';
 import '../styles/Leaderboard.css';
 
@@ -6,6 +7,7 @@ const Leaderboard = () => {
   const [times, setTimes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTimes = async () => {
@@ -40,6 +42,7 @@ const Leaderboard = () => {
 
   return (
     <div className="leaderboard-container">
+      <button className="back-btn" onClick={() => navigate('/timer')}>❌</button>
       <div className="leaderboard-header">
         <h1>⏱ Leaderboard</h1>
         <p className="leaderboard-subtitle">Fastest Times</p>
