@@ -1,8 +1,11 @@
 from flask import Flask
+from flask_cors import CORS
 from routes.users import users_bp
 from routes.times import times_bp
 
+
 app = Flask(__name__)
+CORS(app)
 
 # Blueprints --------------------------------
 app.register_blueprint(users_bp)
