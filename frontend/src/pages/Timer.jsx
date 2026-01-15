@@ -19,7 +19,7 @@ const Timer = () => {
       const userData = JSON.parse(user);
       axios.get(`/times/${userData.id}`)
         .then((response) => {
-          setUserTimes(response.data.reverse());
+          setUserTimes(response.data);
         })
         .catch((error) => {
           console.error('Error fetching times:', error);
@@ -37,6 +37,33 @@ const Timer = () => {
     }
     return () => clearInterval(interval);
   }, [isRunning]);
+
+  // Save time when timer stops
+  useEffect(() => {
+    if (!isRunning && time > 0) {
+      const user = localStorage.getItem('user');
+      if (user) {
+        const userData = JSON.parse(user);
+        axios.post('/times/', {
+          user_id: userData.id,
+          time: time
+        })
+          .then(() => {
+            // Refresh times list after saving
+            axios.get(`/times/${userData.id}`)
+              .then((response) => {
+                setUserTimes(response.data);
+              })
+              .catch((error) => {
+                console.error('Error fetching times:', error);
+              });
+          })
+          .catch((error) => {
+            console.error('Error saving time:', error);
+          });
+      }
+    }
+  }, [isRunning, time]);
 
   // Spacebar toggle timer
   useEffect(() => {
@@ -86,7 +113,7 @@ const Timer = () => {
           </button>
           <button className="nav-btn signout-btn" onClick={handleSignOut}>
             Sign Out
-          </button>
+          </button> 
         </div>
       </nav>
 
