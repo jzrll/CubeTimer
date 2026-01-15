@@ -10,9 +10,10 @@ def get_all_times():
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute("""
-        SELECT id, user_id, time, created_at
-        FROM times
-        ORDER BY created_at DESC
+        SELECT t.id, t.user_id, t.time, t.created_at, u.username
+        FROM times t
+        JOIN users u ON t.user_id = u.id
+        ORDER BY t.created_at DESC
     """)
     rows = cur.fetchall()
     cur.close()
@@ -23,6 +24,7 @@ def get_all_times():
         result.append({
             "id": r[0],
             "user_id": r[1],
+            "username": r[4],
             "time": float(r[2]),
             "created_at": r[3].isoformat()
         })
