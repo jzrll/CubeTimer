@@ -13,8 +13,8 @@ def get_all_times():
         SELECT t.id, t.user_id, t.time, t.created_at, u.username
         FROM times t
         JOIN users u ON t.user_id = u.id
-        ORDER BY t.created_at DESC
-        LIMIT 20
+        ORDER BY time ASC
+        LIMIT 20;
     """)
     rows = cur.fetchall()
     cur.close()
