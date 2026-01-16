@@ -100,6 +100,28 @@ const Timer = () => {
 
   const user = getUser();
 
+  // delete time function
+  const deleteTime = (id) => {
+    axios.delete(`/times/${id}`)
+      .then(() => {
+        // Refresh times list after deleting
+        const user = localStorage.getItem('user');
+        if (user) {
+          const userData = JSON.parse(user);
+          axios.get(`/times/${userData.id}`)
+            .then((response) => {
+              setUserTimes(response.data);
+            })
+            .catch((error) => {
+              console.error('Error fetching times:', error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.error('Error deleting time:', error);
+      });
+  };
+
   return (
     <div className="timer-container">
       {/* Top Navigation */}
@@ -148,6 +170,7 @@ const Timer = () => {
                     <tr key={record.id}>
                       <td>{userTimes.length - index}</td>
                       <td>{record.time.toFixed(2)}</td>
+                      <td><button className="delete-time-btn" onClick={() => deleteTime(record.id)}>❌</button></td>
                     </tr>
                   ))}
                 </tbody>

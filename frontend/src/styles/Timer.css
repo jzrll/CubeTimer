@@ -251,4 +251,11 @@
     padding: 12px 30px;
     font-size: 1em;
   }
+
+  .delete-time-btn {
+    font-size: 0.9em;
+    padding: 5px 10px;
+    background-color: transparent;
+    border: none; 
+  }
 }

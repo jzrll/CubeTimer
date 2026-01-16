@@ -57,10 +57,10 @@ const Leaderboard = () => {
           <table className="leaderboard-table">
             <thead>
               <tr>
-                <th className="rank" style={{ color: "white" }}>Rank</th>
-                <th className="solver" style={{ color: "white" }}>Solver</th>
-                <th className="time" style={{ color: "white" }}>Time</th>
-                <th className="date" style={{ color: "white" }}>Date</th>
+                <th style={{ color: "white", fontFamily: "sans-serif" }}>Rank</th>
+                <th style={{ color: "white", fontFamily: "sans-serif" }}>Solver</th>
+                <th style={{ color: "white", fontFamily: "sans-serif" }}>Time</th>
+                <th style={{ color: "white", fontFamily: "sans-serif" }}>Date</th>
               </tr>
             </thead>
             <tbody>
