@@ -14,6 +14,7 @@ def get_all_times():
         FROM times t
         JOIN users u ON t.user_id = u.id
         ORDER BY t.created_at DESC
+        LIMIT 20
     """)
     rows = cur.fetchall()
     cur.close()

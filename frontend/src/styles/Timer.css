@@ -127,7 +127,7 @@
   backdrop-filter: blur(10px);
   border-radius: 15px;
   padding: 25px;
-  max-height: 600px;
+  max-height: 400px;
   overflow-y: auto;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -241,12 +241,6 @@
 
   .timer-display {
     font-size: 5em;
-  }
-
-  .times-list-container {
-    flex: 0 0 auto;
-    max-height: 300px;
-    width: 100%;
   }
 
   .timer-status {
