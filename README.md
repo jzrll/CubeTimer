@@ -19,11 +19,13 @@ Cube Timer is a web application where users can time their cube solves, view the
 ### Backend
 
 1. Create and activate a virtual environment:
+   
    ```bash
    python -m venv venv
    source venv/bin/activate   # On Windows: venv\Scripts\activate
 
 2. Install dependencies:
+   
    ```bash
    pip install -r requirements.txt
 
@@ -35,10 +37,12 @@ Cube Timer is a web application where users can time their cube solves, view the
 ### Frontend
 
 1. Navigate to the frontend directory and install dependencies:
-    ```bash
+
+   ```bash
     npm install
 
 2. Start the React development server:
+
    ```bash
     npm start
 
