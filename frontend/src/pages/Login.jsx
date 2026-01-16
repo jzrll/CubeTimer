@@ -23,7 +23,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://127.0.0.1:5000/users/login', {
+      const response = await axios.post('/users/login', {
         username,
         password,
       });

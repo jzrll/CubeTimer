@@ -3,6 +3,7 @@ from services.db import get_db_connection
 
 users_bp = Blueprint("users", __name__, url_prefix="/users")
 
+# create a new user
 @users_bp.route("/", methods=["POST"])
 def create_user():
     data = request.json
@@ -10,13 +11,14 @@ def create_user():
     password = data.get("password")
     confirm_password = data.get("confirm_password")
     
+    # validation
     if not username or not password or not confirm_password:
         return jsonify({"error": "Missing required fields"}), 400
     if password != confirm_password:
         return jsonify({"error": "Passwords do not match"}), 400
 
-    conn = get_db_connection()
-    cur = conn.cursor()
+    conn = get_db_connection() # connection
+    cur = conn.cursor() # handle to execute queries
 
     try:
         cur.execute(
@@ -38,13 +40,14 @@ def create_user():
 
     return jsonify({"id": user_id, "username": username}), 201
 
-
+# user login
 @users_bp.route("/login", methods=["POST"])
 def login_user_post():
     data = request.json
     username = data.get("username")
     password = data.get("password")
     
+    # validation
     if not username or not password:
         return jsonify({"error": "Missing required fields"}), 400
 

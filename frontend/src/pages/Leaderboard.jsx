@@ -26,7 +26,7 @@ const Leaderboard = () => {
     fetchTimes();
   }, []);
 
-  const sortedTimes = [...times].sort((a, b) => a.time - b.time);
+  //const sortedTimes = [...times].sort((a, b) => a.time - b.time);
 
   if (loading) return (
     <div className="leaderboard-container">
@@ -48,7 +48,7 @@ const Leaderboard = () => {
         <p className="leaderboard-subtitle">Fastest Times</p>
       </div>
 
-      {sortedTimes.length === 0 ? (
+      {times.length === 0 ? (
         <div className="empty-state">
           <p>No times recorded yet. Be the first to solve!</p>
         </div>
@@ -59,12 +59,12 @@ const Leaderboard = () => {
               <tr>
                 <th style={{ color: "white", fontFamily: "sans-serif" }}>Rank</th>
                 <th style={{ color: "white", fontFamily: "sans-serif" }}>Solver</th>
-                <th style={{ color: "white", fontFamily: "sans-serif" }}>Time</th>
+                <th style={{ color: "white", fontFamily: "sans-serif" }}>Times</th>
                 <th style={{ color: "white", fontFamily: "sans-serif" }}>Date</th>
               </tr>
             </thead>
             <tbody>
-              {sortedTimes.map((time, index) => (
+              {times.map((time, index) => (
                 <tr key={time.id} className={index < 3 ? `rank-${index + 1}` : ''}>
                   <td className="rank">
                     {index < 3 && (
