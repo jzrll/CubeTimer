@@ -26,8 +26,6 @@ const Leaderboard = () => {
     fetchTimes();
   }, []);
 
-  //const sortedTimes = [...times].sort((a, b) => a.time - b.time);
-
   if (loading) return (
     <div className="leaderboard-container">
       <div className="loading">Loading leaderboard...</div>
